@@ -46,10 +46,10 @@ public class LIVRAISON {
 
             if (nombre == 1) {
 
-                 mainObjetct = Status.getOkStatus("OK");
+                mainObjetct = Status.getOkStatus("OK");
 //         
             } else {
-                 mainObjetct = Status.getErrorStatus("ERREUR");
+                mainObjetct = Status.getErrorStatus("ERREUR");
 
             }
 
@@ -74,10 +74,10 @@ public class LIVRAISON {
             int nombre = stm.executeUpdate();
             if (nombre == 1) {
 
-              mainObjetct = Status.getOkStatus("OK");
+                mainObjetct = Status.getOkStatus("OK");
 //         
             } else {
-              mainObjetct = Status.getErrorStatus("ERREUR");
+                mainObjetct = Status.getErrorStatus("ERREUR");
 
             }
 
@@ -103,13 +103,13 @@ public class LIVRAISON {
             stm.setDate(1, DATELIVRAISON);
             stm.setInt(2, NOLIVRAISON);
             int nombre = stm.executeUpdate();
-        
+
             if (nombre == 1) {
 
-                 mainObjetct = Status.getOkStatus("OK");
+                mainObjetct = Status.getOkStatus("OK");
 //         
             } else {
-                 mainObjetct = Status.getErrorStatus("ERREUR");
+                mainObjetct = Status.getErrorStatus("ERREUR");
 
             }
 
@@ -124,21 +124,21 @@ public class LIVRAISON {
 
     }
 
-    public static JSONObject listLivraison() {
+    public static JSONObject selectSimpleLivraison(int NOLIVRAISON) {
         mainObjetct.clear();
         try {
 
             LIVRAISON.createConnection();
 
-            String sql = "SELECT * FROM LIVRAISON";
-            stm1 = con.createStatement();
-            rs = stm1.executeQuery(sql);
-              rs.next();
+            String sql = "SELECT * FROM LIVRAISON where NOLIVRAISON=?";
+            stm1 = con.prepareStatement(sql);
+            stm.setInt(1, NOLIVRAISON);
+            rs.next();
             if (rs != null) {
                 Status.getOkStatusSelect();
                 mainObject.accumulate("NOLIVRAISON", rs.getInt("NOLIVRAISON"));
                 mainObject.accumulate("DATELIVRAISON", rs.getString("DATELIVRAISON"));
-             
+
             } else {
                 mainObject = Status.getErrorStatus("IN DELETE LIVRAISON ");
             }
@@ -191,5 +191,3 @@ public class LIVRAISON {
         }
     }
 }
-
-
