@@ -5,16 +5,13 @@
  */
 package com.mycompany.activite2;
 
-import static com.mycompany.activite2.Article.mainObject;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sf.json.JSONObject;
@@ -40,7 +37,7 @@ public class Commande {
             stm = con.prepareStatement(sql);
             stm.setInt(1, 10);
             stm.setInt(2, 20);
-            stm.setDate(3, java.sql.Date.valueOf("19-11-08"));
+            stm.setString(3, ("19-11-08"));
 
             int nombre = stm.executeUpdate();
             System.out.println(nombre);
@@ -91,7 +88,7 @@ public class Commande {
         return mainObject;
     }
 
-    public static JSONObject updateRecord(int nocommande, Date datecommande) {
+    public static JSONObject updateRecord(int nocommande, int noclient) {
 
         try {
 
@@ -131,7 +128,9 @@ public class Commande {
             stm = con.prepareStatement(sql);
             
             stm.setInt(1, 4);
+            rs=stm.executeQuery();
             rs.next();
+            
             if (rs != null) {
                 mainObject=Status.getOkStatusSelect();
                 mainObject.accumulate("nocommande", "4");
