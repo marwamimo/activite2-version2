@@ -5,8 +5,8 @@
  */
 package com.mycompany.activite2;
 
+import static com.mycompany.activite2.Article.mainObject;
 import com.sun.security.ntlm.Client;
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,54 +19,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sf.json.JSONObject;
 
-public class Commande implements java.io.Serializable {
+public class Commande {
 
     private static Connection con = null;
     private static PreparedStatement stm = null;
     private static Statement stm1 = null;
     private static ResultSet rs = null;
 
-    private int nocommande;
-    private int noclient;
-    private Date datecommande;
-
     static JSONObject mainObject = new JSONObject();
     static Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
 
-    public Commande() {
-    }
-
-    public Commande(int nocommande, int noclient, Date datecommande) {
-        this.nocommande = nocommande;
-        this.noclient = noclient;
-        this.datecommande = datecommande;
-    }
-
-    public int getNocommande() {
-        return this.nocommande;
-    }
-
-    public void setNocommande(int nocommande) {
-        this.nocommande = nocommande;
-    }
-
-    public int getClient() {
-        return this.noclient;
-    }
-
-    public void setClient(int noclient) {
-        this.noclient = noclient;
-    }
-
-    public Date getDatecommande() {
-        return this.datecommande;
-    }
-
-    public void setDatecommande(Date datecommande) {
-        this.datecommande = datecommande;
-    }
-
-    public void insertRecord() {
+    public static JSONObject insertRecord() {
 
         try {
 
@@ -74,9 +37,9 @@ public class Commande implements java.io.Serializable {
             String sql = "insert into  Commande "
                     + "values (?,?,?)";
             stm = con.prepareStatement(sql);
-            stm.setInt(1, nocommande);
-            stm.setInt(2, noclient);
-            stm.setDate(3, (java.sql.Date) datecommande);
+            stm.setInt(1, 10);
+            stm.setInt(2, 20);
+            stm.setDate(3, (new Date()));
 
             int nombre = stm.executeUpdate();
             System.out.println(nombre);
@@ -87,7 +50,6 @@ public class Commande implements java.io.Serializable {
                 //mainObject=Statut.getErrorStatus("Error Message");
 
             }
-            File f = new File("json/insertRecord.json", mainObject.toString());
 
         } catch (SQLException ex) {
             Logger.getLogger(Commande.class.getName()).log(Level.SEVERE, null, ex);
@@ -97,17 +59,17 @@ public class Commande implements java.io.Serializable {
             mainObject.clear();
 
         }
-
+        return mainObject;
     }
 
-    public void deleteRecord(int nocommande) {
+    public static JSONObject deleteRecord(int nocommande) {
 
         try {
 
             createConnection();
             String sql = "delete from commande where nocommande=?";
             stm = con.prepareStatement(sql);
-            stm.setInt(1, nocommande);
+            stm.setInt(1, 10);
             int nombre = stm.executeUpdate();
             System.out.println(nombre);
 
@@ -117,7 +79,6 @@ public class Commande implements java.io.Serializable {
                 //mainObject=Statut.getErrorStatus("Error Message");
 
             }
-            File f = new File("json/deleteRecord.json", mainObject.toString());
 
         } catch (SQLException ex) {
             Logger.getLogger(Commande.class.getName()).log(Level.SEVERE, null, ex);
@@ -126,18 +87,18 @@ public class Commande implements java.io.Serializable {
             closeConnection();
             mainObject.clear();
         }
-
+        return mainObject;
     }
 
-    public static void updateRecord(int nocommande, Date datecommande) {
+    public static JSONObject updateRecord(int nocommande, Date datecommande) {
 
         try {
 
             createConnection();
             String sql = "update  Commande set datecommande=? where nocommande=?";
             stm = con.prepareStatement(sql);
-            stm.setDate(1, (java.sql.Date) datecommande);
-            stm.setInt(2, nocommande);
+            stm.setDate(1, (new Date()));
+            stm.setInt(2, 10);
             int nombre = stm.executeUpdate();
             System.out.println(nombre);
 
@@ -146,7 +107,6 @@ public class Commande implements java.io.Serializable {
             } else if (nombre == 0) {
                 //mainObject=Statut.getErrorStatus("Error Message");
             }
-            File f = new File("json/deleteRecord.json", mainObject.toString());
 
         } catch (SQLException ex) {
             Logger.getLogger(Commande.class.getName()).log(Level.SEVERE, null, ex);
@@ -155,10 +115,10 @@ public class Commande implements java.io.Serializable {
             closeConnection();
             mainObject.clear();
         }
-
+        return mainObject;
     }
 
-    public void selectSimple() {
+    public static JSONObject selectSimple() {
 
         try {
 
@@ -166,7 +126,7 @@ public class Commande implements java.io.Serializable {
             String sql = "select * from Commande "
                     + " where nocommande=? ";
             stm = con.prepareStatement(sql);
-            stm.setInt(1, nocommande);
+            stm.setInt(1, 4);
             rs.next();
             if (rs != null) {
                 //mainObject=Statut.getOkStatusSelect("Record Inserted");
@@ -183,9 +143,9 @@ public class Commande implements java.io.Serializable {
         } finally {
 
             closeConnection();
-
+            mainObject.clear();
         }
-
+        return mainObject;
     }
 
     private static void createConnection() {
@@ -223,4 +183,3 @@ public class Commande implements java.io.Serializable {
         }
     }
 }
-
