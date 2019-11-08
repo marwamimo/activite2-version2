@@ -5,6 +5,7 @@
  */
 package com.mycompany.activite2;
 
+import static com.mycompany.activite2.Article.mainObject;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -30,7 +31,7 @@ public class LIVRAISON {
     static Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
     static JSONObject mainObjetct = new JSONObject();
 
-    public static JSONObject insertLivraison(int NOLIVRAISON, Date DATELIVRAISON) {
+    public static JSONObject insertLivraison() {
 
         try {
 
@@ -38,17 +39,17 @@ public class LIVRAISON {
             String sql = "insert into  Livraison "
                     + "values (?,?)";
             stm = con.prepareStatement(sql);
-            stm.setInt(1, NOLIVRAISON);
-            stm.setDate(2, DATELIVRAISON);
+            stm.setInt(1, 300);
+            stm.setDate(2, (Date) new java.util.Date());
 
             int nombre = stm.executeUpdate();
 
             if (nombre == 1) {
 
-                // mainObjetct = Status.getOkStatus("OK");
+                 mainObjetct = Status.getOkStatus("OK");
 //         
             } else {
-                //  mainObjetct = Status.getErrorStatus("ERREUR");
+                 mainObjetct = Status.getErrorStatus("ERREUR");
 
             }
 
@@ -73,10 +74,10 @@ public class LIVRAISON {
             int nombre = stm.executeUpdate();
             if (nombre == 1) {
 
-                // mainObjetct = Status.getOkStatus("OK");
+              mainObjetct = Status.getOkStatus("OK");
 //         
             } else {
-                //  mainObjetct = Status.getErrorStatus("ERREUR");
+              mainObjetct = Status.getErrorStatus("ERREUR");
 
             }
 
@@ -102,13 +103,13 @@ public class LIVRAISON {
             stm.setDate(1, DATELIVRAISON);
             stm.setInt(2, NOLIVRAISON);
             int nombre = stm.executeUpdate();
-            // System.out.println(nombre);
+        
             if (nombre == 1) {
 
-                // mainObjetct = Status.getOkStatus("OK");
+                 mainObjetct = Status.getOkStatus("OK");
 //         
             } else {
-                // mainObjetct = Status.getErrorStatus("ERREUR");
+                 mainObjetct = Status.getErrorStatus("ERREUR");
 
             }
 
@@ -132,13 +133,14 @@ public class LIVRAISON {
             String sql = "SELECT * FROM LIVRAISON";
             stm1 = con.createStatement();
             rs = stm1.executeQuery(sql);
-            int NOLIVRAISON;
-            Date DATELIVRAISON;
-
-            while (rs.next()) {
-                NOLIVRAISON = rs.getInt("NOLIVRAISON");
-                DATELIVRAISON = rs.getDate("DATELIVRAISON");
-
+              rs.next();
+            if (rs != null) {
+                Status.getOkStatusSelect();
+                mainObject.accumulate("NOLIVRAISON", rs.getInt("NOLIVRAISON"));
+                mainObject.accumulate("DATELIVRAISON", rs.getString("DATELIVRAISON"));
+             
+            } else {
+                mainObject = Status.getErrorStatus("IN DELETE LIVRAISON ");
             }
 
         } catch (SQLException ex) {
@@ -188,15 +190,6 @@ public class LIVRAISON {
             }
         }
     }
-
-    private static JSONObject messageOkSingle(String msg) {
-
-        mainObjetct.accumulate("Status", "OK");
-        mainObjetct.accumulate("timestamp", timestamp.getTime());
-        mainObjetct.accumulate("message", msg);
-
-        return mainObjetct;
-
-    }
-
 }
+
+
