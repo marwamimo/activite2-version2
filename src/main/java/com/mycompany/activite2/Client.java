@@ -131,7 +131,7 @@ return mainObject;
                 mainObject.accumulate("nomClient", rs.getString("nomclient"));
                 mainObject.accumulate("notelephone", rs.getString("notelephone"));
             } else {
-
+                 mainObject = Status.getErrorStatus(" client not found");
             }
 
         } catch (SQLException ex) {
