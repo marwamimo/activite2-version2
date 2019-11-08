@@ -33,7 +33,7 @@ public class Commande {
             String sql = "insert into  Commande "
                     + "values (?,?,?)";
             stm = con.prepareStatement(sql);
-            stm.setInt(1, 10);
+            stm.setInt(1, 330);
             stm.setInt(2, 20);
             stm.setString(3, ("19-11-08"));
 
@@ -59,13 +59,13 @@ public class Commande {
     }
 
     public static JSONObject deleteRecord(int nocommande) {
-
+        mainObject.clear();
         try {
 
             createConnection();
             String sql = "delete from commande where nocommande=?";
             stm = con.prepareStatement(sql);
-            stm.setInt(1, 10);
+            stm.setInt(1, nocommande);
             int nombre = stm.executeUpdate();
             System.out.println(nombre);
 
@@ -117,7 +117,7 @@ public class Commande {
     }
 
     public static JSONObject selectSimple(int nocommande) {
-        mainObject = new JSONObject();
+        mainObject.clear();
         try {
 
             createConnection();
@@ -131,7 +131,7 @@ public class Commande {
                 mainObject = Status.getOkStatusSelect();
                 mainObject.accumulate("nocommande", rs.getInt("nocommande"));
                 mainObject.accumulate("noclient", rs.getInt("noclient"));
-                // mainObject.accumulate("datecommande", String.valueOf(rs.getDate("datecommande")));
+                mainObject.accumulate("datecommande", String.valueOf(rs.getDate("datecommande")));
 
             } else {
                 mainObject = Status.getErrorStatus("Error Message");
