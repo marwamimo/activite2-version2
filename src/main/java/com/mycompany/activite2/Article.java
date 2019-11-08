@@ -5,7 +5,6 @@
  */
 package com.mycompany.activite2;
 
-import com.sun.security.ntlm.Client;
 import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -59,7 +58,7 @@ public class Article {
         return mainObject;
     }
     public static JSONObject updateArticle(int noartilce, double prixUnitaire) {
-        mainObject.clear();
+       mainObject = new JSONObject();
         try {
 
             createConnection();
@@ -126,11 +125,11 @@ public class Article {
                 mainObject.accumulate("prix unitaire", rs.getString("prixunitaire"));
                 mainObject.accumulate("quantite en stock", rs.getString("quantiteenstock"));
             } else {
-                mainObject = Status.getErrorStatus("IN DELETE ARTICLE ");
+                mainObject = Status.getErrorStatus("IN SELECT ARTICLE ");
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Article.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
 
             closeConnection();
@@ -146,9 +145,9 @@ public class Article {
             Class.forName("oracle.jdbc.OracleDriver");
             con = DriverManager.getConnection("jdbc:oracle:thin:@144.217.163.57:1521:XE", "e19a10team2", "anypw");
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Article.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Article.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
