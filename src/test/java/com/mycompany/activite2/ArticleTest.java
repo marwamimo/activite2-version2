@@ -37,12 +37,12 @@ public class ArticleTest {
     public void testUpdateArticle() {
         System.out.println("updateArticle");
         int noartilce = 80;
-        String desc = "test";
+        String desc = "test11";
         //JSONObject expResult = new JSONObject();
         //expResult.accumulate("Statut", "OK");
         JSONObject result = Article.updateArticle(noartilce, desc);
         //System.out.println(result.getString("Status"));
-        assertEquals(result.getString("Status"), "OK");
+        assertEquals(result.getString("Statut"), "OK");
 
     }
     /**
