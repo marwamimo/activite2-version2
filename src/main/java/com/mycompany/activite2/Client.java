@@ -25,10 +25,10 @@ public class Client {
 
     private static JSONObject mainObject =new JSONObject();
     static Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
-    private static Connection con = null;
-    private static PreparedStatement stm = null;
-    private static Statement stm1 = null;
-    private static ResultSet rs = null;
+    private static Connection con ;
+    private static PreparedStatement stm ;
+    private static Statement stm1 ;
+    private static ResultSet rs ;
     
     
        public static JSONObject insertClient(){
@@ -38,7 +38,7 @@ public class Client {
             String sql = "insert into  client "
                     + "values (?,?,?)";
             stm = con.prepareStatement(sql);
-            stm.setInt(1, 50);
+            stm.setInt(1, 514);
             stm.setString(2, "ClientTest");
             stm.setString(3, "514514514");
            
@@ -86,15 +86,15 @@ public class Client {
 
     }
 
-    public static JSONObject updateClientNom(int id, String nom) {
-        mainObject=new JSONObject();
+    public static JSONObject updateClientNom(int noclient, String nom) {
+       mainObject.clear();
         try {
 
             createConnection();
             String sql = "update  Client set nomclient=? where noclient=?";
             stm = con.prepareStatement(sql);
             stm.setString(1, nom);
-            stm.setInt(2, id);
+            stm.setInt(2, noclient);
             int nombre = stm.executeUpdate();
             if (nombre == 1) {
                 mainObject = Status.getOkStatus("Client updated");
@@ -114,7 +114,7 @@ return mainObject;
     }
 
     public static JSONObject selectSimple(int noClient) {
-        mainObject=new JSONObject();
+        mainObject.clear();
         try {
 
             Client.createConnection();
@@ -122,6 +122,7 @@ return mainObject;
             String sql = "SELECT * FROM client where noclient=?";
             stm = con.prepareStatement(sql);
             stm.setInt(1, noClient);
+            rs=stm.executeQuery();
 
             rs.next();
             if (rs != null) {
@@ -148,7 +149,7 @@ return mainObject;
         try {
 
             Class.forName("oracle.jdbc.OracleDriver");
-            con = DriverManager.getConnection("jdbc:oracle:thin:@144.217.163.57:1521:XE", "e19a10team2", "anypw");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@144.217.163.57:1521:XE", "vente", "anypw");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

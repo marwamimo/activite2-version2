@@ -29,50 +29,36 @@ public class ClientTest {
     @After
     public void tearDown() {
     }
-
-    /**
-     * Test of insertClient method, of class Client.
-     */
-    @Test
-    public void testInsertClient() {
-        System.out.println("insertClient");
-        JSONObject expResult = null;
-        JSONObject result = Client.insertClient();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of deleteClient method, of class Client.
-     */
-    @Test
-    public void testDeleteClient() {
-        System.out.println("deleteClient");
-        int id = 0;
-        JSONObject expResult = null;
-        JSONObject result = Client.deleteClient(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
+    
+    
+    
+       /**
      * Test of updateClientNom method, of class Client.
      */
     @Test
     public void testUpdateClientNom() {
         int noClient = 10;
-        String nom = "Testupd1";
-        JSONObject expResult = new JSONObject();
-        JSONObject result = Client.updateClientNom(noClient, nom);
-        expResult.accumulate("Statut", "OK");
-        expResult.accumulate("Timestamp", result.get("Timestamp"));
-        expResult.accumulate("message", "" + "Client updated");
+        String nom = "MarouaBh";
+        
+        JSONObject result =new JSONObject();
+         result = Client.updateClientNom(noClient, nom);
+        
+        assertEquals(result.getString("Statut"), "OK");
+      
+    }
+    /**
+     * Test of deleteClient method, of class Client.
+     */
+    
+    
+  @Test
+    public void testDeleteClient() {
+        int noclient=514;
+        JSONObject result = new JSONObject();
+        result = Client.deleteClient(noclient);
 
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        // fail("The test case is a prototype.");
+        assertEquals(result.getString("Statut"), "OK");
+      
     }
 
     /**
@@ -82,14 +68,24 @@ public class ClientTest {
     public void testSelectSimple() {
 
         int noClient = 10;
-        JSONObject expResult = new JSONObject();
-        expResult.accumulate("Statut", "OK");
-        expResult.accumulate("Timestamp", timestamp.getTime());
+
+        JSONObject result = new JSONObject();
+        result = Client.selectSimple(noClient);
+
+        assertEquals(result.getInt("noClient"), 10);
+        assertEquals(result.getString("Statut"), "OK");
+
+    }
+    
+      /**
+     * Test of insertClient method, of class Client.
+     */
+    @Test
+    public void testInsertClient() {
         
-        JSONObject result = Client.selectSimple(noClient);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+      JSONObject result = new JSONObject();
+        result = Client.insertClient();
+        assertEquals(result.getString("Statut"), "OK");
     }
 
 }
