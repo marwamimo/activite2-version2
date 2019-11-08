@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import net.sf.json.JSONObject;
 
 public class Commande {
+    
 
     private static Connection con = null;
     private static PreparedStatement stm = null;
