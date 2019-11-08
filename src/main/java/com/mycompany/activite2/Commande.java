@@ -6,7 +6,7 @@
 package com.mycompany.activite2;
 
 import static com.mycompany.activite2.Article.mainObject;
-import com.sun.security.ntlm.Client;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -40,7 +40,7 @@ public class Commande {
             stm = con.prepareStatement(sql);
             stm.setInt(1, 10);
             stm.setInt(2, 20);
-            stm.setDate(3, (new Date()));
+            stm.setDate(3, (java.sql.Date) new java.util.Date());
 
             int nombre = stm.executeUpdate();
             System.out.println(nombre);
@@ -98,7 +98,7 @@ public class Commande {
             createConnection();
             String sql = "update  Commande set datecommande=? where nocommande=?";
             stm = con.prepareStatement(sql);
-            stm.setDate(1, (new Date()));
+            stm.setDate(1, (java.sql.Date) new java.util.Date());
             stm.setInt(2, 10);
             int nombre = stm.executeUpdate();
             System.out.println(nombre);
