@@ -37,7 +37,7 @@ public class ArticleTest {
     public void testUpdateArticle() {
         System.out.println("updateArticle");
         int noartilce = 80;
-        String desc = "test11";
+        String desc = "test";
         //JSONObject expResult = new JSONObject();
         //expResult.accumulate("Statut", "OK");
         JSONObject result = Article.updateArticle(noartilce, desc);
