@@ -29,54 +29,56 @@ public class CommandeTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of insertRecord method, of class Commande.
+  
+      /**
+     * Test of updateRecord method, of class Commande.
      */
-    //  @Test
-     public void testInsertRecord() {
+    @Test
+    public void testUpdateRecord() {
 
-    JSONObject result = new JSONObject();
-    result  = Commande.insertRecord();
+        int nocommande = 330;
+        int noclient = 10;
 
-    assertEquals(result.getString("Statut"), "OK");
-    //   }
+        JSONObject result = new JSONObject();
+        result = Commande.updateRecord(nocommande, noclient);
+
+        assertEquals(result.getString("Statut"), "OK");
+
+    }
+
     /**
      * Test of deleteRecord method, of class Commande.
      */
-//    @Test
-//    public void testDeleteRecord() {
-//        int nocommande = 10;
-//        JSONObject result = new JSONObject();
-//        result = Commande.deleteRecord(nocommande);
-//        assertEquals(result.getString("Statut"), "OK");
-        //  }
-        /**
-         * Test of updateRecord method, of class Commande.
-         */
-//    @Test
-//    public void testUpdateRecord() {
-//        
-//        int nocommande =4;
-//        int noclient=30;
-// 
-//        JSONObject result = new JSONObject();
-//               result= Commande.updateRecord(nocommande, noclient);
+    @Test
+    public void testDeleteRecord() {
+        int nocommande = 330;
+        JSONObject result = new JSONObject();
+        result = Commande.deleteRecord(nocommande);
+        assertEquals(result.getString("Statut"), "OK");
+      }
+  
 
-//
-//        assertEquals( result.getInt("Statut", "OK"), 4);
-
-//    }
-        /**
-         * Test of selectSimple method, of class Commande.
-         */
-//    @Test
-//    public void testSelectSimple() {       
-//        int nocommande = 4;
-//        JSONObject result = new JSONObject();
-//        result = Commande.selectSimple(nocommande);
-//        assertEquals(result.getInt("nocommande"), 4);
-//
-//    }
+    /**
+     * Test of selectSimple method, of class Commande.
+     */
+    @Test
+    public void testSelectSimple() {
+        int nocommande = 4;
+        JSONObject result = new JSONObject();
+        result = Commande.selectSimple(nocommande);
+        assertEquals(result.getInt("nocommande"), 4);
 
     }
+      /**
+     * Test of insertRecord method, of class Commande. //
+     */
+    @Test
+    public void testInsertRecord() {
+
+        JSONObject result = new JSONObject();
+        result = Commande.insertRecord();
+
+        assertEquals(result.getString("Statut"), "OK");
+    }
+
 }
