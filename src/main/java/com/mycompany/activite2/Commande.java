@@ -47,7 +47,7 @@ public class Commande {
 
             if (nombre == 1) {
                 mainObject=Status.getOkStatus("Record Inserted");
-            } else if (nombre == 0) {
+            } else  {
                 mainObject=Status.getErrorStatus("Error Message");
 
             }
@@ -76,7 +76,7 @@ public class Commande {
 
             if (nombre == 1) {
                 mainObject=Status.getOkStatus("Record Inserted");
-            } else if (nombre == 0) {
+            } else  {
                 mainObject=Status.getErrorStatus("Error Message");
 
             }
@@ -105,7 +105,7 @@ public class Commande {
 
             if (nombre == 1) {
                 mainObject=Status.getOkStatus("Record Inserted");
-            } else if (nombre == 0) {
+            } else  {
                 mainObject=Status.getErrorStatus("Error Message");
             }
 
@@ -135,7 +135,7 @@ public class Commande {
                 mainObject.accumulate("noclient", "10");
                 mainObject.accumulate("datecommande", "19-07-05");
 
-            } else if (rs == null) {
+            } else  {
                 mainObject=Status.getErrorStatus("Error Message");
 
             }
