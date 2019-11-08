@@ -23,7 +23,7 @@ import net.sf.json.JSONObject;
  */
 public class Client {
 
-    private static JSONObject mainObject;
+    private static JSONObject mainObject =new JSONObject();
     static Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
     private static Connection con = null;
     private static PreparedStatement stm = null;
@@ -86,8 +86,8 @@ public class Client {
 
     }
 
-    public static void updateClientNom(int id, String nom) {
-        mainObject.clear();
+    public static JSONObject updateClientNom(int id, String nom) {
+        mainObject=new JSONObject();
         try {
 
             createConnection();
@@ -110,11 +110,11 @@ public class Client {
             closeConnection();
 
         }
-
+return mainObject;
     }
 
     public static JSONObject selectSimple(int noClient) {
-        mainObject.clear();
+        mainObject=new JSONObject();
         try {
 
             Client.createConnection();
