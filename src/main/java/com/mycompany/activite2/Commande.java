@@ -45,9 +45,9 @@ public class Commande {
             System.out.println(nombre);
 
             if (nombre == 1) {
-                //mainObject=Statut.getOkStatus("Record Inserted");
+                mainObject=Status.getOkStatus("Record Inserted");
             } else if (nombre == 0) {
-                //mainObject=Statut.getErrorStatus("Error Message");
+                mainObject=Status.getErrorStatus("Error Message");
 
             }
 
@@ -74,9 +74,9 @@ public class Commande {
             System.out.println(nombre);
 
             if (nombre == 1) {
-                //mainObject=Statut.getOkStatus("Record Inserted");
+                mainObject=Status.getOkStatus("Record Inserted");
             } else if (nombre == 0) {
-                //mainObject=Statut.getErrorStatus("Error Message");
+                mainObject=Status.getErrorStatus("Error Message");
 
             }
 
@@ -103,9 +103,9 @@ public class Commande {
             System.out.println(nombre);
 
             if (nombre == 1) {
-                //mainObject=Statut.getOkStatus("Record Inserted");
+                mainObject=Status.getOkStatus("Record Inserted");
             } else if (nombre == 0) {
-                //mainObject=Statut.getErrorStatus("Error Message");
+                mainObject=Status.getErrorStatus("Error Message");
             }
 
         } catch (SQLException ex) {
@@ -129,13 +129,13 @@ public class Commande {
             stm.setInt(1, 4);
             rs.next();
             if (rs != null) {
-                //mainObject=Statut.getOkStatusSelect("Record Inserted");
+                mainObject=Status.getOkStatusSelect();
                 mainObject.accumulate("nocommande", "4");
                 mainObject.accumulate("noclient", "10");
                 mainObject.accumulate("datecommande", "19-07-05");
 
             } else if (rs == null) {
-                //mainObject=Statut.getErrorStatus("Error Message");
+                mainObject=Status.getErrorStatus("Error Message");
 
             }
         } catch (SQLException ex) {
