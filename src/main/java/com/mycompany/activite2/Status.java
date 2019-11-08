@@ -16,6 +16,7 @@ import net.sf.json.JSONObject;
 public class Status {
 
     static Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
+    static JSONObject mainObject = new JSONObject();
 
      public static JSONObject getOkStatusSelect() {
         mainObject.accumulate("Statut", "OK");
