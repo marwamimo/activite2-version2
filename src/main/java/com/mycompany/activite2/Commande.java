@@ -40,7 +40,7 @@ public class Commande {
             stm = con.prepareStatement(sql);
             stm.setInt(1, 10);
             stm.setInt(2, 20);
-            stm.setDate(3, java.sql.Date.valueOf("2019-11-08"));
+            stm.setDate(3, java.sql.Date.valueOf("19-11-08"));
 
             int nombre = stm.executeUpdate();
             System.out.println(nombre);
@@ -96,11 +96,11 @@ public class Commande {
         try {
 
             createConnection();
-            String sql = "update  Commande set datecommande=? where nocommande=?";
+            String sql = "update  Commande set noclient=? where nocommande=?";
             stm = con.prepareStatement(sql);
             
             stm.setInt(2, 10);
-            stm.setDate(1,  java.sql.Date.valueOf("2019-11-08"));
+            stm.setInt(1, 20);
             
             int nombre = stm.executeUpdate();
             System.out.println(nombre);
@@ -156,7 +156,7 @@ public class Commande {
         try {
 
             Class.forName("oracle.jdbc.OracleDriver");
-            con = DriverManager.getConnection("jdbc:oracle:thin:@144.217.163.57:1521:XE", "e19a10team2", "anypw");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@144.217.163.57:1521:XE", "vente", "anypw");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
