@@ -22,10 +22,10 @@ import net.sf.json.JSONObject;
 public class Commande {
     
 
-    private static Connection con = null;
-    private static PreparedStatement stm = null;
-    private static Statement stm1 = null;
-    private static ResultSet rs = null;
+    private static Connection con ;
+    private static PreparedStatement stm;
+
+    private static ResultSet rs ;
 
     static JSONObject mainObject = new JSONObject();
     static Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
@@ -40,7 +40,7 @@ public class Commande {
             stm = con.prepareStatement(sql);
             stm.setInt(1, 10);
             stm.setInt(2, 20);
-            stm.setDate(3, (java.sql.Date) new java.util.Date());
+            stm.setDate(3, java.sql.Date.valueOf("2019-11-08"));
 
             int nombre = stm.executeUpdate();
             System.out.println(nombre);
@@ -98,7 +98,7 @@ public class Commande {
             createConnection();
             String sql = "update  Commande set datecommande=? where nocommande=?";
             stm = con.prepareStatement(sql);
-            stm.setDate(1, (java.sql.Date) new java.util.Date());
+            stm.setDate(1,  java.sql.Date.valueOf("2019-11-08"));
             stm.setInt(2, 10);
             int nombre = stm.executeUpdate();
             System.out.println(nombre);
