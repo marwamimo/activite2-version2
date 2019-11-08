@@ -23,9 +23,9 @@ public class Commande {
     
 
     private static Connection con ;
-    private static PreparedStatement stm;
+    private static PreparedStatement stm= null;
 
-    private static ResultSet rs ;
+    private static ResultSet rs=null ;
 
     static JSONObject mainObject = new JSONObject();
     static Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
@@ -98,8 +98,10 @@ public class Commande {
             createConnection();
             String sql = "update  Commande set datecommande=? where nocommande=?";
             stm = con.prepareStatement(sql);
-            stm.setDate(1,  java.sql.Date.valueOf("2019-11-08"));
+            
             stm.setInt(2, 10);
+            stm.setDate(1,  java.sql.Date.valueOf("2019-11-08"));
+            
             int nombre = stm.executeUpdate();
             System.out.println(nombre);
 
@@ -127,6 +129,7 @@ public class Commande {
             String sql = "select * from Commande "
                     + " where nocommande=? ";
             stm = con.prepareStatement(sql);
+            
             stm.setInt(1, 4);
             rs.next();
             if (rs != null) {
