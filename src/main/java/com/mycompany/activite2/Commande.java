@@ -5,7 +5,6 @@
  */
 package com.mycompany.activite2;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,12 +16,11 @@ import java.util.logging.Logger;
 import net.sf.json.JSONObject;
 
 public class Commande {
-    
 
-    private static Connection con ;
-    private static PreparedStatement stm= null;
+    private static Connection con;
+    private static PreparedStatement stm = null;
 
-    private static ResultSet rs=null ;
+    private static ResultSet rs = null;
 
     static JSONObject mainObject = new JSONObject();
     static Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
@@ -43,9 +41,9 @@ public class Commande {
             System.out.println(nombre);
 
             if (nombre == 1) {
-                mainObject=Status.getOkStatus("Record Inserted");
-            } else  {
-                mainObject=Status.getErrorStatus("Error Message");
+                mainObject = Status.getOkStatus("Record Inserted");
+            } else {
+                mainObject = Status.getErrorStatus("Error Message");
 
             }
 
@@ -72,9 +70,9 @@ public class Commande {
             System.out.println(nombre);
 
             if (nombre == 1) {
-                mainObject=Status.getOkStatus("Record Inserted");
-            } else  {
-                mainObject=Status.getErrorStatus("Error Message");
+                mainObject = Status.getOkStatus("Record Inserted");
+            } else {
+                mainObject = Status.getErrorStatus("Error Message");
 
             }
 
@@ -95,17 +93,17 @@ public class Commande {
             createConnection();
             String sql = "update  Commande set noclient=? where nocommande=?";
             stm = con.prepareStatement(sql);
-            
+
             stm.setInt(2, 10);
             stm.setInt(1, 20);
-            
+
             int nombre = stm.executeUpdate();
             System.out.println(nombre);
 
             if (nombre == 1) {
-                mainObject=Status.getOkStatus("Record Inserted");
-            } else  {
-                mainObject=Status.getErrorStatus("Error Message");
+                mainObject = Status.getOkStatus("Record Inserted");
+            } else {
+                mainObject = Status.getErrorStatus("Error Message");
             }
 
         } catch (SQLException ex) {
@@ -118,27 +116,25 @@ public class Commande {
         return mainObject;
     }
 
-    public static JSONObject selectSimple() {
-
+    public static JSONObject selectSimple(int nocommande) {
+        mainObject = new JSONObject();
         try {
 
             createConnection();
-            String sql = "select * from Commande "
-                    + " where nocommande=? ";
+            String sql = "select * from commande where nocommande=?";
             stm = con.prepareStatement(sql);
-            
-            stm.setInt(1, 4);
-            rs=stm.executeQuery();
+            stm.setInt(1, nocommande);
+            rs = stm.executeQuery();
             rs.next();
-            
-            if (rs != null) {
-                mainObject=Status.getOkStatusSelect();
-                mainObject.accumulate("nocommande", "4");
-                mainObject.accumulate("noclient", "10");
-                mainObject.accumulate("datecommande", "19-07-05");
 
-            } else  {
-                mainObject=Status.getErrorStatus("Error Message");
+            if (rs != null) {
+                mainObject = Status.getOkStatusSelect();
+                mainObject.accumulate("nocommande", rs.getInt("nocommande"));
+                mainObject.accumulate("noclient", rs.getInt("noclient"));
+                // mainObject.accumulate("datecommande", String.valueOf(rs.getDate("datecommande")));
+
+            } else {
+                mainObject = Status.getErrorStatus("Error Message");
 
             }
         } catch (SQLException ex) {
