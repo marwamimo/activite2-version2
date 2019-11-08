@@ -17,14 +17,17 @@ public class Status {
 
     static Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
 
-    public static JSONObject getOkStatus(String msg) {
+     public static JSONObject getOkStatusSelect() {
         mainObject.accumulate("Statut", "OK");
         mainObject.accumulate("Timestamp", timestamp.getTime());
+        return mainObject;
+    }
+    public static JSONObject getOkStatus(String msg) {
+        getOkStatusSelect();
         mainObject.accumulate("message", "" + msg);
         return mainObject;
-
     }
-
+  
     public static JSONObject getErrorStatus(String msg) {
         mainObject.accumulate("Statut", "Error");
         mainObject.accumulate("Timestamp", timestamp.getTime());
