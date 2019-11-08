@@ -31,6 +31,11 @@ public class LIVRAISON {
     static Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
     static JSONObject mainObjetct = new JSONObject();
 
+//    public LIVRAISON() {
+//        LIVRAISON livraison = new LIVRAISON ();
+//    }
+
+    
     public static JSONObject insertLivraison() {
 
         try {
