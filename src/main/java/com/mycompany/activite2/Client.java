@@ -5,6 +5,7 @@
  */
 package com.mycompany.activite2;
 
+import static com.mycompany.activite2.Article.mainObject;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -28,6 +29,36 @@ public class Client {
     private static PreparedStatement stm = null;
     private static Statement stm1 = null;
     private static ResultSet rs = null;
+    
+    
+       public static JSONObject insertClient(){
+       mainObject.clear();
+       try {
+            createConnection();
+            String sql = "insert into  client "
+                    + "values (?,?,?)";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, 50);
+            stm.setString(2, "ClientTest");
+            stm.setString(3, "514514514");
+           
+            int nombre = stm.executeUpdate();
+              if (nombre == 1) {
+                mainObject = Status.getOkStatus(" client inserted");
+            } else {
+                mainObject = Status.getErrorStatus("IN Inserte Client ");
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+
+            closeConnection();
+
+        }
+
+        return mainObject;
+    }
 
     public static JSONObject deleteClient(int id) {
         mainObject.clear();
@@ -39,10 +70,10 @@ public class Client {
             stm.setInt(1, id);
             int nombre = stm.executeUpdate();
             if (nombre == 1) {
-                // getOkStatus("MSG");
+                mainObject = Status.getOkStatus("Client deleted");
             } else {
 
-                // getErrorStatus() 
+                mainObject = Status.getErrorStatus("undeleted client");
             }
 
         } catch (SQLException ex) {
@@ -66,10 +97,10 @@ public class Client {
             stm.setInt(2, id);
             int nombre = stm.executeUpdate();
             if (nombre == 1) {
-                // getOkStatus("MSG");
+                mainObject = Status.getOkStatus("Client updated");
             } else {
 
-                // getErrorStatus() 
+                mainObject = Status.getErrorStatus("unupdated client");
             }
 
         } catch (SQLException ex) {
@@ -94,7 +125,7 @@ public class Client {
 
             rs.next();
             if (rs != null) {
-                // getOkStatus();
+                mainObject = Status.getOkStatusSelect();
                 mainObject.accumulate("noClient", rs.getInt("noclient"));
                 mainObject.accumulate("nomClient", rs.getString("nomclient"));
                 mainObject.accumulate("notelephone", rs.getString("notelephone"));
@@ -150,10 +181,6 @@ public class Client {
         }
     }
 
-    private static void getOkStatus() {
-        mainObject.accumulate("Statut", "OK");
-        mainObject.accumulate("Timestamp", timestamp.getTime());
-
-    }
+    
 
 }
