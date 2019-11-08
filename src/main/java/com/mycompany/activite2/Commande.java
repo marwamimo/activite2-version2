@@ -5,12 +5,14 @@
  */
 package com.mycompany.activite2;
 
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sf.json.JSONObject;
@@ -21,24 +23,23 @@ public class Commande {
     private static PreparedStatement stm = null;
 
     private static ResultSet rs = null;
-
+    private static Statement stm1 = null;
     static JSONObject mainObject = new JSONObject();
     static Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
 
     public static JSONObject insertRecord() {
-
+        mainObject.clear();
         try {
 
             createConnection();
-            String sql = "insert into  Commande "
-                    + "values (?,?,?)";
+            String sql = "insert into commande values (?,?,?)";
             stm = con.prepareStatement(sql);
             stm.setInt(1, 330);
-            stm.setInt(2, 20);
-            stm.setString(3, ("19-11-08"));
+            stm.setInt(3, 20);
+            stm.setDate(2, new java.sql.Date(Calendar.getInstance().getTime().getTime()));
 
             int nombre = stm.executeUpdate();
-            System.out.println(nombre);
+            
 
             if (nombre == 1) {
                 mainObject = Status.getOkStatus("Record Inserted");
@@ -52,7 +53,7 @@ public class Commande {
         } finally {
 
             closeConnection();
-            mainObject.clear();
+           
 
         }
         return mainObject;
@@ -67,7 +68,6 @@ public class Commande {
             stm = con.prepareStatement(sql);
             stm.setInt(1, nocommande);
             int nombre = stm.executeUpdate();
-            System.out.println(nombre);
 
             if (nombre == 1) {
                 mainObject = Status.getOkStatus("Record Inserted");
@@ -81,21 +81,21 @@ public class Commande {
         } finally {
 
             closeConnection();
-            mainObject.clear();
+         
         }
         return mainObject;
     }
 
     public static JSONObject updateRecord(int nocommande, int noclient) {
-
+        mainObject.clear();
         try {
 
             createConnection();
             String sql = "update  Commande set noclient=? where nocommande=?";
             stm = con.prepareStatement(sql);
 
-            stm.setInt(2, 10);
-            stm.setInt(1, 20);
+            stm.setInt(2, nocommande);
+            stm.setInt(1, noclient);
 
             int nombre = stm.executeUpdate();
             System.out.println(nombre);
@@ -111,7 +111,7 @@ public class Commande {
         } finally {
 
             closeConnection();
-            mainObject.clear();
+            
         }
         return mainObject;
     }
@@ -142,7 +142,7 @@ public class Commande {
         } finally {
 
             closeConnection();
-            mainObject.clear();
+           
         }
         return mainObject;
     }
