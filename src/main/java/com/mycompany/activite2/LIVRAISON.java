@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sf.json.JSONObject;
@@ -24,38 +25,31 @@ import net.sf.json.JSONObject;
  */
 public class LIVRAISON {
 
-    private static Connection con = null;
-    private static PreparedStatement stm = null;
-    private static Statement stm1 = null;
-    private static ResultSet rs = null;
+    private static JSONObject mainObjetct = new JSONObject();
     static Timestamp timestamp = new java.sql.Timestamp(System.currentTimeMillis());
-    static JSONObject mainObjetct = new JSONObject();
+    private static Connection con;
+    private static PreparedStatement stm;
+    private static Statement stm1;
+    private static ResultSet rs;
 
-//    public LIVRAISON() {
-//        LIVRAISON livraison = new LIVRAISON ();
+//    public Livraison() {
+//        Livraison livraison = new Livraison ();
 //    }
-
-    
     public static JSONObject insertLivraison() {
-
+         mainObject.clear();
         try {
-
             createConnection();
-            String sql = "insert into  Livraison "
+            String sql = "insert into  livraison "
                     + "values (?,?)";
             stm = con.prepareStatement(sql);
-            stm.setInt(1, 300);
-            stm.setDate(2, (Date) new java.util.Date());
-
+            stm.setInt(1, 100);
+           stm.setDate(2, new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+           
             int nombre = stm.executeUpdate();
-
             if (nombre == 1) {
-
-                mainObjetct = Status.getOkStatus("OK");
-//         
+                mainObject = Status.getOkStatus(" livraison inserted");
             } else {
-                mainObjetct = Status.getErrorStatus("ERREUR");
-
+                mainObject = Status.getErrorStatus("IN INSERT livraison ");
             }
 
         } catch (SQLException ex) {
@@ -65,85 +59,22 @@ public class LIVRAISON {
             closeConnection();
 
         }
-        return mainObjetct;
 
+        return mainObject;
     }
+
 
     public static JSONObject deleteLIVRAISON(int NOLIVRAISON) {
-        mainObjetct.clear();
+    mainObject.clear();
         try {
+
             createConnection();
-            String sql = "delete from livraision where NOLIVRAISON=?";
+            String sql = "delete from livraison where NOLIVRAISON=?";
             stm = con.prepareStatement(sql);
             stm.setInt(1, NOLIVRAISON);
             int nombre = stm.executeUpdate();
             if (nombre == 1) {
-
-                mainObjetct = Status.getOkStatus("OK");
-//         
-            } else {
-                mainObjetct = Status.getErrorStatus("ERREUR");
-
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(LIVRAISON.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-
-            closeConnection();
-
-        }
-        return mainObjetct;
-
-    }
-
-    public static JSONObject updateLivraison(int NOLIVRAISON, Date DATELIVRAISON) {
-
-        mainObjetct.clear();
-        try {
-
-            createConnection();
-            String sql = "update  Livraison set DATELIVRAISON=? where NOLIVRAISON=?";
-            stm = con.prepareStatement(sql);
-            stm.setDate(1, DATELIVRAISON);
-            stm.setInt(2, NOLIVRAISON);
-            int nombre = stm.executeUpdate();
-
-            if (nombre == 1) {
-
-                mainObjetct = Status.getOkStatus("OK");
-//         
-            } else {
-                mainObjetct = Status.getErrorStatus("ERREUR");
-
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(LIVRAISON.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-
-            closeConnection();
-
-        }
-        return mainObjetct;
-
-    }
-
-    public static JSONObject selectSimpleLivraison(int NOLIVRAISON) {
-        mainObjetct.clear();
-        try {
-
-            LIVRAISON.createConnection();
-
-            String sql = "SELECT * FROM LIVRAISON where NOLIVRAISON=?";
-            stm1 = con.prepareStatement(sql);
-            stm.setInt(1, NOLIVRAISON);
-            rs.next();
-            if (rs != null) {
-                Status.getOkStatusSelect();
-                mainObject.accumulate("NOLIVRAISON", rs.getInt("NOLIVRAISON"));
-                mainObject.accumulate("DATELIVRAISON", rs.getString("DATELIVRAISON"));
-
+                mainObject = Status.getOkStatus(" LIVRAISON deleted");
             } else {
                 mainObject = Status.getErrorStatus("IN DELETE LIVRAISON ");
             }
@@ -151,11 +82,61 @@ public class LIVRAISON {
         } catch (SQLException ex) {
             Logger.getLogger(LIVRAISON.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
+            closeConnection();
+        }
+        return mainObject;
+
+    }
+
+    public static JSONObject updateLivrason(int NOLIVRAISON, Date DATELIVRAISON) {
+
+        mainObject.clear();
+        try {
+            createConnection();
+            String sql = "update  livraison set NOLIVRAISON=? where DATELIVRAISON=?";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1,NOLIVRAISON);
+            stm.setDate(2, DATELIVRAISON);
+            int nombre = stm.executeUpdate();
+            if (nombre == 1) {
+                mainObject = Status.getOkStatus(" livraison updated");
+            } else {
+                mainObject = Status.getErrorStatus("IN UPDATE livraison ");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LIVRAISON.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+        return mainObject;
+    }
+    public static JSONObject selectSimpleLivraison(int NOLIVRAISON) {
+       mainObject.clear();
+        try {
+
+            createConnection();
+            String sql = "select * from LIVRAISON  where NOLIVRAISON=?";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, NOLIVRAISON);
+            rs=stm.executeQuery();
+            rs.next();
+            if (rs != null) {
+                Status.getOkStatusSelect();
+                mainObject.accumulate("NOLIVRAISON", rs.getInt("NOLIVRAISON"));
+                mainObject.accumulate("datelivraison", rs.getDate("datelivraison"));
+             
+            } else {
+                mainObject = Status.getErrorStatus("IN SELECT LIVRAISON ");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(LIVRAISON.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
 
             closeConnection();
 
         }
-        return mainObjetct;
+        return mainObject;
 
     }
 
@@ -163,7 +144,7 @@ public class LIVRAISON {
         try {
 
             Class.forName("oracle.jdbc.OracleDriver");
-            con = DriverManager.getConnection("jdbc:oracle:thin:@144.217.163.57:1521:XE", "VENTE", "anypw");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@144.217.163.57:1521:XE", "vente", "anypw");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(LIVRAISON.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -171,7 +152,7 @@ public class LIVRAISON {
         }
     }
 
-    private static void closeConnection() {
+       private static void closeConnection() {
         if (rs != null) {
             try {
                 rs.close();
